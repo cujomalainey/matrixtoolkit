@@ -2,36 +2,29 @@ from Tkinter import *
 from PIL import Image, ImageTk
 import threading
 from time import sleep
+import os
+import inspect
 
 
 class display():
-    def run(self, t, k):
+    def run(self, run, kill, scale, dims):
         self.root = Tk()
-        image = Image.open("test.gif")
+        self.scale = scale
+        self.dims = dims
+        image = Image.new('RGB', self.dims)
         photo = ImageTk.PhotoImage(image)
         self.label = Label(image=photo)
         self.label.image = photo
         # keep a reference!
         self.label.pack()
-        self.t = threading.Thread(target=t)
+        self.t = threading.Thread(target=run)
         self.t.start()
         self.root.mainloop()
-        k()
+        kill()
 
     def setImage(self, img):
-        img = ImageTk.PhotoImage(img)
+        img = ImageTk.PhotoImage(img.copy().resize(
+            [a * self.scale for a in self.dims], Image.ANTIALIAS))
         self.label.configure(image=img)
         self.label.image = img
-
-
-def test():
-    sleep(2)
-    disp.setImage(Image.open("test1.gif"))
-
-
-def kill():
-    pass
-
-if __name__ == '__main__':
-    disp = display()
-    disp.run(test, kill)
+        self.root.update()
