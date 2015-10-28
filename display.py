@@ -7,7 +7,7 @@ import inspect
 
 
 class display():
-    def run(self, run, kill, scale, dims):
+    def __init__(self, run, kill, scale, dims):
         self.root = Tk()
         self.scale = scale
         self.dims = dims
@@ -22,9 +22,39 @@ class display():
         self.root.mainloop()
         kill()
 
-    def setImage(self, img):
+    def SetImage(self, img):
+        """
+        Takes an image, copies it then scales it and displays
+        """
         img = ImageTk.PhotoImage(img.copy().resize(
             [a * self.scale for a in self.dims], Image.ANTIALIAS))
         self.label.configure(image=img)
         self.label.image = img
         self.root.update()
+
+    def Clear(self):
+        """
+        clears display to black
+        """
+        self.SetImage(Image.new('RGB', self.dims))
+
+    def SetPWMBits(self):
+        """
+        Not applicable to simulation
+        """
+        pass
+
+    def SetPixel(self):
+        """
+        """
+        pass
+
+    def SetBuffer(self):
+        """
+        """
+        pass
+
+    def Fill(self):
+        """
+        """
+        pass
