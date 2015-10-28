@@ -8,10 +8,16 @@ import inspect
 
 class display():
     def __init__(self, run, kill, scale, dims):
+        """
+        run: function to run once setup is complete
+        kill: deconstructor once simulation is closed
+        scale: integer to scale dims by
+        dims: tuple of matrix dimensions in pixels (x, y)
+        """
         self.root = Tk()
         self.scale = scale
         self.dims = dims
-        image = Image.new('RGB', self.dims)
+        self.image = Image.new('RGB', self.dims)
         photo = ImageTk.PhotoImage(image)
         self.label = Label(image=photo)
         self.label.image = photo
@@ -22,7 +28,7 @@ class display():
         self.root.mainloop()
         kill()
 
-    def SetImage(self, img):
+    def SetImage(self, img, x=0, y=0):
         """
         Takes an image, copies it then scales it and displays
         """
@@ -38,23 +44,27 @@ class display():
         """
         self.SetImage(Image.new('RGB', self.dims))
 
-    def SetPWMBits(self):
+    def SetPWMBits(self, n):
         """
         Not applicable to simulation
         """
         pass
 
-    def SetPixel(self):
+    def SetPixel(self, x, y, r, g=None, b=None):
         """
+        draws a pixel on the matrix at x,y
         """
-        pass
+        try:
+            r = int(r)
+        except TypeError:
+            r, g, b = *r
 
     def SetBuffer(self):
         """
         """
         pass
 
-    def Fill(self):
+    def Fill(self, color):
         """
         """
         pass
