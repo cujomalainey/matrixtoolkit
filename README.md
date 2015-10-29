@@ -14,3 +14,5 @@ The diplay object replaces the Adafruit_RGBMatrix object in your code with three
   3. Third parameter is your scale, an interger to scale the image by because it is really small otherwise
   4. Fourth is your dimensions (in pixels) of the target display (so your original LED size) in a (x,y) tuple
 3. call matrix.run() right before you want to start your main loop but after your done initializing, anything after this command will not get run, the next thing that will get run is what you passed in as your first parameter. The reason is, tkinter must hold the main thread, so the package hijacks it and creates a new one for your code to run on.
+
+All other commands in the package have the same parameters and do the exact same operations (where applicable.)
