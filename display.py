@@ -7,7 +7,7 @@ import inspect
 
 
 class display():
-    def __init__(self, run, kill, scale, dims):
+    def __init__(self, matrix_height, chain_length):
         """
         run: function to run once setup is complete
         kill: deconstructor once simulation is closed
@@ -15,14 +15,16 @@ class display():
         dims: tuple of matrix dimensions in pixels (x, y)
         """
         self.root = Tk()
-        self.scale = scale
-        self.dims = dims
+        self.scale = 6
+        self.dims = (32*chain_length, matrix_height)
         self.image = Image.new('RGB', self.dims)
-        photo = ImageTk.PhotoImage(image)
+        photo = ImageTk.PhotoImage(self.image)
         self.label = Label(image=photo)
         self.label.image = photo
         # keep a reference!
         self.label.pack()
+
+    def start(self, run, kill):
         self.t = threading.Thread(target=run)
         self.t.start()
         self.root.mainloop()
@@ -57,7 +59,8 @@ class display():
         try:
             r = int(r)
         except TypeError:
-            r, g, b = *r
+            pass
+            # r, g, b = *r
 
     def SetBuffer(self):
         """
