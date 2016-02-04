@@ -1,9 +1,6 @@
 from Tkinter import *
 from PIL import Image, ImageTk, ImageDraw
 import threading
-from time import sleep
-import os
-import inspect
 
 
 class display():
@@ -16,7 +13,7 @@ class display():
         """
         self.root = Tk()
         self.scale = 6
-        self.dims = (32*chain_length, matrix_height)
+        self.dims = (32*chain_length*self.scale, matrix_height*self.scale)
         self.image = Image.new('RGB', self.dims)
         self.tkimage = self.image
         photo = ImageTk.PhotoImage(self.image)
@@ -36,8 +33,8 @@ class display():
         """
         Takes an image, copies it then scales it and displays
         """
-        self.tkimage = ImageTk.PhotoImage(img.copy().resize(
-            [a * self.scale for a in self.dims], Image.ANTIALIAS))
+        self.image.paste(img.copy().convert('RGB').resize([img.height * self.scale, img.width * self.scale], Image.ANTIALIAS), box=(x*self.scale, y*self.scale))
+        self.tkimage = ImageTk.PhotoImage(self.image)
         self._update()
 
     def _update(self):
@@ -69,6 +66,7 @@ class display():
 
     def SetBuffer(self):
         """
+        Not applicable to simulation
         """
         pass
 
