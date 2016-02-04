@@ -61,13 +61,22 @@ class display():
         """
         draws a pixel on the matrix at x,y
 
-        remember to scale pixels when you implement this
+        works with scaled displays
         """
         try:
             r = int(r)
+            self.draw.rectangle(
+                (x*self.scale, y*self.scale,
+                 x*self.scale + self.scale - 1,
+                 y*self.scale + self.scale - 1),
+                fill=(r, g, b))
         except TypeError:
             pass
             # r, g, b = *r
+            self.draw.rectangle((x, y, x + self.scale - 1, y + self.scale - 1),
+                                fill=r)
+        self.tkimage = ImageTk.PhotoImage(self.image)
+        self._update()
 
     def SetBuffer(self):
         """
