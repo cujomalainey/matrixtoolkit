@@ -33,7 +33,10 @@ class display():
         """
         Takes an image, copies it then scales it and displays
         """
-        self.image.paste(img.copy().convert('RGB').resize([img.height * self.scale, img.width * self.scale], Image.ANTIALIAS), box=(x*self.scale, y*self.scale))
+        self.image.paste(
+            img.copy().convert('RGB').resize(
+             [img.height * self.scale, img.width * self.scale],
+             Image.ANTIALIAS), box=(x*self.scale, y*self.scale))
         self.tkimage = ImageTk.PhotoImage(self.image)
         self._update()
 
@@ -57,6 +60,8 @@ class display():
     def SetPixel(self, x, y, r, g=None, b=None):
         """
         draws a pixel on the matrix at x,y
+
+        remember to scale pixels when you implement this
         """
         try:
             r = int(r)
