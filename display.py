@@ -35,7 +35,7 @@ class display():
         """
         self.image.paste(
             img.copy().convert('RGB').resize(
-             [img.height * self.scale, img.width * self.scale],
+             [img.width * self.scale, img.height * self.scale],
              Image.ANTIALIAS), box=(x*self.scale, y*self.scale))
         self.tkimage = ImageTk.PhotoImage(self.image)
         self._update()
