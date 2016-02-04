@@ -1,5 +1,5 @@
 from Tkinter import *
-from PIL import Image, ImageTk
+from PIL import Image, ImageTk, ImageDraw
 import threading
 from time import sleep
 import os
@@ -18,9 +18,11 @@ class display():
         self.scale = 6
         self.dims = (32*chain_length, matrix_height)
         self.image = Image.new('RGB', self.dims)
+        self.tkimage = self.image
         photo = ImageTk.PhotoImage(self.image)
         self.label = Label(image=photo)
         self.label.image = photo
+        self.draw = ImageDraw.Draw(self.image)
         # keep a reference!
         self.label.pack()
 
@@ -34,17 +36,20 @@ class display():
         """
         Takes an image, copies it then scales it and displays
         """
-        img = ImageTk.PhotoImage(img.copy().resize(
+        self.tkimage = ImageTk.PhotoImage(img.copy().resize(
             [a * self.scale for a in self.dims], Image.ANTIALIAS))
-        self.label.configure(image=img)
-        self.label.image = img
+        self._update()
+
+    def _update(self):
+        self.label.configure(image=self.tkimage)
+        self.label.image = self.tkimage
         self.root.update()
 
     def Clear(self):
         """
         clears display to black
         """
-        self.SetImage(Image.new('RGB', self.dims))
+        self.Fill((0, 0, 0))
 
     def SetPWMBits(self, n):
         """
@@ -70,4 +75,7 @@ class display():
     def Fill(self, color):
         """
         """
-        pass
+        self.draw.rectangle((0, 0, self.dims[0], self.dims[1]), fill=color)
+        self.tkimage = ImageTk.PhotoImage(self.image.copy().resize(
+            [a * self.scale for a in self.dims], Image.ANTIALIAS))
+        self._update()
