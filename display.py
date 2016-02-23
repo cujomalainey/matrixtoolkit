@@ -88,6 +88,5 @@ class display():
         """
         """
         self.draw.rectangle((0, 0, self.dims[0], self.dims[1]), fill=color)
-        self.tkimage = ImageTk.PhotoImage(self.image.copy().resize(
-            [a * self.scale for a in self.dims], Image.ANTIALIAS))
+        self.tkimage = ImageTk.PhotoImage(self.image.copy())
         self._update()
