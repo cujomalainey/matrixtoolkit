@@ -1,10 +1,10 @@
-from Tkinter import *
+from Tkinter import Tk, Label
 from PIL import Image, ImageTk, ImageDraw
 import threading
 
 
 class display():
-    def __init__(self, matrix_height, chain_length):
+    def __init__(self, matrix_height, chain_length, scale=6):
         """
         run: function to run once setup is complete
         kill: deconstructor once simulation is closed
@@ -12,7 +12,7 @@ class display():
         dims: tuple of matrix dimensions in pixels (x, y)
         """
         self.root = Tk()
-        self.scale = 6
+        self.scale = scale
         self.dims = (32*chain_length*self.scale, matrix_height*self.scale)
         self.image = Image.new('RGB', self.dims)
         self.tkimage = self.image
@@ -26,8 +26,12 @@ class display():
     def start(self, run, kill):
         self.t = threading.Thread(target=run)
         self.t.start()
+        self.root.protocol("WM_DELETE_WINDOW", self._on_closing)
         self.root.mainloop()
         kill()
+
+    def _on_closing(self):
+        self.root.destroy()
 
     def SetImage(self, img, x=0, y=0):
         """
