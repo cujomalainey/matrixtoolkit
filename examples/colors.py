@@ -11,7 +11,7 @@ else:
 
 class drawer():
     """
-    handles controls what is being drawn
+    controls what is being drawn
     """
 
     def __init__(self):
