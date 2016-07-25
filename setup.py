@@ -3,7 +3,7 @@
 from distutils.core import setup
 
 setup(name='matrixtoolkit',
-      version='0.5',
+      version='0.6',
       description='LED Matrix Emulation Package',
       author='Curtis Malainey',
       author_email='curtis@malainey.com',

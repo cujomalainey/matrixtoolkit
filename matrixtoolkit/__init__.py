@@ -1,1 +1,1 @@
-from display import display as Adafruit_RGBmatrix
+from .display import display as Adafruit_RGBmatrix
