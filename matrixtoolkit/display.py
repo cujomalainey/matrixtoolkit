@@ -1,4 +1,8 @@
-from Tkinter import Tk, Label
+import platform
+if platform.system() == "Darwin":
+    from Tkinter import Tk, Label
+elif platform.system() == "Windows":
+    from tkinter import Tk, Label
 from PIL import Image, ImageTk, ImageDraw
 import threading
 
